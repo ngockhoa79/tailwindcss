@@ -1,0 +1,97 @@
+<form [formGroup]="form" required class="animate-pulse">
+    <div class=" md:grid grid-cols-4 gap-4 mt-12">
+        <div class="col-start-2 col-end-3" >
+            <div class="flex-col">
+                <div class="col-start-2 col-end-3" >
+                    <div  class="flex-col">
+                        <div class="flex-col">
+                            <div class="lb">Name*</div>
+                            <div  *ngIf="status">
+                                <input formControlName="name" [(ngModel)]="txtname" class="inp" >
+                                <p class="text-red-700" *ngIf="txtname.length ===0">Name is required</p>
+                            </div>
+                            <div *ngIf="!status" >
+                                <p>{{txtname}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+
+
+        <div class="col-start-3 col-end-4 " >
+            <div class="flex-col">
+                <div class="flex-col">
+                    <div class="lb">E-mail Address*</div>
+                    <div  *ngIf="status" >
+                        <input formControlName="gmail" [(ngModel)]="txtgmail"  class="inp" >
+                        <p class="text-red-700" *ngIf="txtgmail.length ===0">E-mail Address is required</p>
+                        <p class="text-red-700" *ngIf="!txtgmail.includes('@mydog.com') && txtgmail.length >0" >E-mail Address is invalid</p>
+                    </div>
+                    <div >
+                        <p *ngIf="!status">{{txtgmail}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-start-2 col-end-3" >
+            <div class="flex-col">
+                <div class="flex-col">
+                    <div class="lb">Contact Number*</div>
+                    <div  *ngIf="status" >
+                        <input formControlName="number" [(ngModel)]="txtnumberphone" pattern="[0-9]*" class="inp" >
+                        <p  class="text-red-700" *ngIf="txtnumberphone.length === 0">Contact Number is required</p>
+                        <p  class="text-red-700" *ngIf="(!(txtnumberphone.length === 0) && form.controls['number'].invalid||txtnumberphone.length < 4 && !(txtnumberphone.length === 0) ||txtnumberphone.length  > 12)">Contact Number should consist of 8 to 12 digits only</p>
+                    </div>
+                    <div >
+                        <p *ngIf="!status">{{txtnumberphone}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-start-3 col-end-4" >   
+            <div class="flex-col">
+                <div class="flex-col">
+                    <div class="lb">Gender*</div>
+                    <div  *ngIf="status">
+                        <select  (change)="getvalue($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option>{{gender}}</option>
+                            <option>--select--</option>
+                            <option  [value]="gender" *ngFor="let gender of genders">
+                                {{gender}}
+                            </option>
+                      </select>
+                        <p class="text-red-700" *ngIf="txtgender ==='--select--'">Gender is required.</p>
+                    </div>
+                    <div *ngIf="!status" >
+                        <p>{{txtgender}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-start-2 col-end-4">
+            <div class="lb">Note*</div>
+            <div  *ngIf="status">
+                <br><textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="note" [(ngModel)]="txtnote" ></textarea>
+                <p class="text-red-700" *ngIf="txtnote.length === 0">Gender is required</p>
+            </div>
+            <div >
+            <p *ngIf="!status">{{txtnote}}</p>
+        </div>
+        </div>
+       <div></div>
+       
+       <div class="col-start-2 grid md:justify-items-end justify-items-center ">
+            <input  *ngIf="!status" class="bg-gray-400 rounded-full p-2 w-20 border-2 text-white font-bold" type="button" (click)="edit();" value="Edit">
+            <input  [disabled]="form.invalid || txtgender ==='--select--' ||!txtgmail.includes('@mydog.com') " *ngIf="status" class="bg-blue-400 rounded-full p-2 w-20 border-2 text-white font-bold" type="button" (click)="edit();" value="Save">
+        </div>
+        
+    </div>
+   
+</form>
